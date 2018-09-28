@@ -1,6 +1,5 @@
 class Sorter {
 
-
   constructor() {
     this.bag = []
   }
@@ -23,24 +22,20 @@ class Sorter {
 
   sort(indices) {
 
-    var values = [];
-    indices.sort(function(a,b){return a-b})
-    for(let val of indices)
-    {
-      values[values.length] = this.bag[val]
-    }
-    if(this.comparator == undefined)
-    {
-      values.sort(function(a,b){return a-b})
-    }
-    else
-    {
-      values.sort(this.comparator)
-    }
-    for(let i = 0;i < indices.length;i++)
-    {
-      this.bag[indices[i]] = values[i]
-    }
+    let values = [];
+    indices.sort( (a,b)=>a-b )
+
+    indices.forEach((item,i,indices)=>
+      values.push(this.bag[item])
+    )
+
+    if(this.comparator == undefined) 
+      this.comparator = (a,b) => a-b
+    values.sort(this.comparator)
+    
+    indices.forEach((item,i,indices)=>
+      this.bag[item] = values[i]
+    )
   }
 
   setComparator(compareFunction) {
